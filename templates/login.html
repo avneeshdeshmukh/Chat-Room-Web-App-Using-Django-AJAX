@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<!-- Login 2 - Bootstrap Brain Component -->
+<div class="bg-dark py-3 py-md-5">
+    <div class="container">
+      <div class="row justify-content-md-center">
+        <div class="col-12 col-md-11 col-lg-8 col-xl-7 col-xxl-6">
+          <div class="text-white p-4 p-md-5 rounded shadow-sm" style="background-color: #181818;">
+            <div class="row">
+              <div class="col-12">
+                <div class="mb-5">
+                  <h3 class="custom-font">Log in</h3>
+                  {% if messages %}
+                  <div class="alert alert-info alert-dismissible fade show" role="alert">
+                    {% for message in messages %}
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    {% endfor %}
+                    
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            <form action="{% url 'login_user' %}" method="POST">
+              {% csrf_token %}
+              <div class="row gy-3 gy-md-4 overflow-hidden">
+                <div class="col-12">
+                  <label for="email" class="form-label custom-font">Username <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control custom-font" name="username" id="email" required>
+                </div>
+                <div class="col-12">
+                  <label for="password" class="form-label custom-font">Password <span class="text-danger">*</span></label>
+                  <input type="password" class="form-control custom-font" name="password" id="password" value="" required>
+                </div>
+                <div class="col-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" name="remember_me" id="remember_me">
+                    <label class="form-check-label text-secondary custom-font" for="remember_me">
+                      Keep me logged in
+                    </label>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="d-grid">
+                    <button class="btn btn-lg btn-primary custom-font px-2" type="submit">Log in now</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="row">
+              <div class="col-12">
+                <hr class="mt-5 mb-4 border-secondary-subtle">
+                <div class="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-end">
+                    <a href="{% url 'signup_user' %}" class="link-secondary text-decoration-none custom-font">Don't have an account? Sign Up Here!</a>
+
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

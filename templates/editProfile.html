@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide|Roboto">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        .custom-font {
+            font-family: "Audiowide", sans-serif;
+        }
+
+        .tight-container {
+            margin: 50px 0px;
+            /* Adjust margin as needed */
+            color: white;
+        }
+
+        .custom-font-2 {
+            font-family: "Roboto", sans-serif;
+        }
+
+        .top-container {
+            margin-top: 30px;
+            margin-bottom: 2px;
+        }
+
+        .bottom-container {
+            margin-top: 2px;
+            margin-bottom: 5px;
+        }
+
+        .red {
+            background-color: #ffc6c4;
+            border-color: red;
+        }
+    </style>
+</head>
+
+<body style="background-color: #121212;">
+    <nav class="navbar navbar-expand-lg" style="background-color: #181818;">
+        <div class="container-fluid py-2">
+            <a class="custom-font ps-5 navbar-brand text-white align-text-center fs-3" href="{% url 'home' %}">
+                <img src="/static/images/chat.png" alt="Logo" style="border-radius: 40px;" height="40"
+                    class="d-inline-block align-text-center me-3">
+                SimpleChat
+            </a>
+
+
+
+
+
+
+
+        </div>
+
+    </nav>
+    <!-- User Profile - Bootstrap Brain Component -->
+    <div class="bg-dark py-3 py-md-5">
+        <div class="container">
+            <div class="row justify-content-md-center">
+                <div class="col-12 col-md-11 col-lg-8 col-xl-7 col-xxl-6">
+                    <div class="text-white p-4 p-md-5 rounded shadow-sm" style="background-color: #181818;">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="mb-5">
+                                    <h3 class="custom-font">User Profile</h3>
+                                    {% if messages %}
+                                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                        {% for message in messages %}
+                                        {{ message }}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                            aria-label="Close"></button>
+                                        {% endfor %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Add your user profile content here -->
+                        <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content bg-dark text-light">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title custom-font" id="exampleModalLabel">Please Confirm</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body custom-font" id="modalBodyContent">
+                                        Save Changes?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-info custom-font"
+                                            data-bs-dismiss="modal">No</button>
+                                        <button type="button" class="btn btn-danger custom-font" id="confirmButton"
+                                            data-bs-dismiss="modal">Yes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Add this script to your HTML -->
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                var confirmButton = document.getElementById('confirmButton');
+                                var form = document.getElementById('confirmationForm');
+
+                                confirmButton.addEventListener('click', function () {
+                                    // Trigger form submission when the user clicks "Yes" in the modal
+                                    form.submit();
+                                });
+                            });
+                        </script>
+
+                        <div class="row gy-3 gy-md-4 overflow-hidden">
+
+                            <form action="{% url 'editProfile' %}" method="POST" id="confirmationForm">
+                                {% csrf_token %}
+                                <div class="col-12">
+                                    <!-- <label for="room_id" class="form-label custom-font">Name</label> -->
+                                    <div class="input-group my-3">
+                                        <span class="input-group-text custom-font" id="room-id-addon">First Name</span>
+                                        <input type="text" class="form-control custom-font" name="first_name"
+                                            id="room_id" value="{{ request.user.first_name }}">
+                                    </div>
+                                    <div class="input-group my-3">
+                                        <span class="input-group-text custom-font" id="room-id-addon">Last Name</span>
+                                        <input type="text" class="form-control custom-font" name="last_name"
+                                            id="room_id" value="{{ request.user.last_name }}">
+                                    </div>
+                                    <div class="input-group my-3">
+                                        <span class="input-group-text custom-font" id="room-id-addon">Username</span>
+                                        <input type="text" class="form-control custom-font" name="username" id="room_id"
+                                            value="{{ request.user.username }}">
+                                    </div>
+                                    <div class="input-group my-3">
+                                        <span class="input-group-text custom-font" id="room-id-addon">Email</span>
+                                        <input type="email" class="form-control custom-font" name="email" id="room_id"
+                                            value="{{ request.user.email }}">
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="d-grid">
+                                            <button data-bs-toggle="modal" data-bs-target="#exampleModal1"
+                                                class="btn btn-lg btn-primary custom-font px-2" type="button">Save
+                                                Changes</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered ">
+                                <div class="modal-content bg-dark text-light">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title custom-font" id="exampleModalLabel">Please Confirm</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body custom-font" id="modalBodyContent">
+                                        Are you sure you want to delete your account?
+                                        <br>
+                                        WARNING : YOU CANNOT REVERSE FROM THIS STEP!
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-info custom-font"
+                                            data-bs-dismiss="modal">No</button>
+                                        <a href="{% url 'deleteAccount' %}">
+                                            <button type="button" class="btn btn-danger custom-font"
+                                                data-bs-dismiss="modal">Yes</button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End of user profile content -->
+                        <div class="row">
+                            <div class="col-12">
+                                <hr class="mt-5 mb-4 border-secondary-subtle">
+                                <div class="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-end">
+                                    <!-- Add additional links or buttons as needed -->
+                                    <a href="{% url 'changePassword' %}"
+                                        class="link-secondary text-decoration-none custom-font">Change Password</a>
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2"
+                                        class="link-secondary text-decoration-none custom-font">Delete Account</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="text-center text-lg-start" style="background-color: #181818;">
+        <div class="container d-flex justify-content-center py-3">
+            <a href="https://www.linkedin.com/in/avneesh-deshmukh/" target="_blank">
+                <button type="button" class="btn  btn-lg btn-floating mx-2" style="background-color: #181818;">
+                    <img src="/static/images/linked_in.png" alt="gmail" style="height: 50px;">
+                </button>
+            </a>
+            <a href="https://twitter.com/avneeshpd" target="_blank">
+                <button type="button" class="btn  btn-lg btn-floating mx-2" style="background-color: #181818;">
+                    <img src="/static/images/twitter_logo.png" alt="gmail" style="height: 50px;">
+                </button>
+            </a>
+            <a href="mailto:avneesh1745@gmail.com" target="_blank">
+                <button type="button" class="btn  btn-lg btn-floating mx-2" style="background-color: #181818;">
+                    <img src="/static/images/gmail_logo.png" alt="gmail" style="height: 50px;">
+                </button>
+            </a>
+            <a href="https://www.instagram.com/avneeshdeshmukh/" target="_blank">
+                <button type="button" class="btn  btn-lg btn-floating mx-2" style="background-color: #181818;">
+                    <img src="/static/images/insta_logo.png" alt="insta" style="height: 50px;">
+                </button>
+            </a>
+
+        </div>
+
+        <!-- Copyright -->
+        <div class="text-center text-white p-3" style="background-color: #181818; margin-bottom:0px">
+            © 2023 Copyright:
+            <a class="text-white" href="#">SimpleChat</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+
+
+    <!-- End of .container -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

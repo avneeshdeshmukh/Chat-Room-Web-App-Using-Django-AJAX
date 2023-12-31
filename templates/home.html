@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block body %}
+{% if messages %}
+<div class="alert alert-info alert-dismissible fade show" role="alert">
+    {% for message in messages %}
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    {% endfor %}
+
+</div>
+
+{% endif %}
+
+
+{% if request.user.is_authenticated %}
+
+
+<div class="d-flex justify-content-center top-container">
+    <h2 class="custom-font text-white fs-1">Welcome To SimpleChat, {{ request.user.first_name }}</h2>
+</div>
+<div class="d-flex justify-content-center bottom-container">
+    <i class="text-white" style="font-family: cursive;">We are happy to have you!</i>
+</div>
+
+{% endif %}
+
+
+
+
+<div class="d-flex justify-content-center my-5">
+    <h2 class="custom-font text-white fs-1"> IMAGINE A PLACE...</h2>
+</div>
+<div class="d-flex justify-content-center px-5 mx-5 fs-3 text-center tight-container">
+    <p style="color: white;" class="custom-font text-white fs-5">
+        ...where school clubs, gaming enthusiasts, and global art lovers effortlessly converge. A space where you
+        and your friends chat every day, forging connections beyond the digital realm. Welcome to SimpleChat — where
+        belonging, talking, and hanging out seamlessly come together. Join us, and let every interaction be a
+        memorable experience.
+    </p>
+</div>
+
+<div style="margin: 40px; " class="d-flex justify-content-center">
+    <button style="width: 500px" type="button" class="btn btn-outline-success custom-font fs-1"><a class="navbar-brand"
+            href="{% url 'createRoom' %}"> Create A Room</a>
+    </button>
+</div>
+
+<div style="margin: 40px 40px 80px" class="d-flex justify-content-center">
+    <button style="width: 500px" type="button" class="btn btn-outline-success custom-font fs-1"><a class="navbar-brand"
+            href="{% url 'joinRoom' %}"> Join A Room</a>
+    </button>
+</div>
+
+{% endblock %}
